@@ -2,6 +2,8 @@
 
 namespace DesignPatterns.Structural.Decorator.Component
 {
+    // Concrete decorator in the Decorator pattern - adds milk to the coffee
+    // This decorator extends the base coffee with milk functionality and cost
     public class MilkDecorator : CoffeeDecorator
     {
         public MilkDecorator(ICoffee coffee) : base(coffee)

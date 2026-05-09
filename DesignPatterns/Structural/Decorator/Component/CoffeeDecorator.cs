@@ -2,6 +2,8 @@
 
 namespace DesignPatterns.Structural.Decorator.Component
 {
+    // Base decorator class in the Decorator pattern - wraps a coffee component
+    // Decorators extend the functionality of the wrapped component dynamically
     public abstract class CoffeeDecorator : ICoffee
     {
         protected ICoffee coffee;
