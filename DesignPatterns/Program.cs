@@ -3,6 +3,7 @@ using DesignPatterns.Structural.Decorator.Interface;
 using DesignPatterns.Structural.Adapter;
 using DesignPatterns.Structural.Bridge;
 using DesignPatterns.Structural.Composite;
+using DesignPatterns.Structural.Facade;
 
 class Program
 {
@@ -36,7 +37,8 @@ class Program
         Vehicle electricCar = new Car(new ElectricEngine());
         electricCar.Drive();
 
-        /* The Composite Pattern
+        /*
+         * The Composite Pattern
          * Composes objects into tree structures to represent part-whole hierarchies.
          */
         Employee dev1 = new Employee("Ahmed");
@@ -52,5 +54,24 @@ class Program
 
         Console.WriteLine("\n--- Company Structure ---");
         company.ShowDetails();
+
+        /*
+         * The Facade Pattern
+         * Provides a simplified interface to a library, a framework, or any other complex set of classes.
+         */
+        Console.WriteLine("\n--- Facade Pattern ---");
+        var projector = new Projector();
+        var soundSystem = new SoundSystem();
+        var lights = new Lights();
+
+        var homeTheater = new HomeTheaterFacade(
+            projector,
+            soundSystem,
+            lights
+        );
+
+        homeTheater.WatchMovie();
+        Console.WriteLine();
+        homeTheater.EndMovie();
     }
 }
