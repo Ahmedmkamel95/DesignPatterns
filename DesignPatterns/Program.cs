@@ -2,6 +2,7 @@ using DesignPatterns.Structural.Decorator.Component;
 using DesignPatterns.Structural.Decorator.Interface;
 using DesignPatterns.Structural.Adapter;
 using DesignPatterns.Structural.Bridge;
+using DesignPatterns.Structural.Composite;
 
 class Program
 {
@@ -34,5 +35,22 @@ class Program
 
         Vehicle electricCar = new Car(new ElectricEngine());
         electricCar.Drive();
+
+        /* The Composite Pattern
+         * Composes objects into tree structures to represent part-whole hierarchies.
+         */
+        Employee dev1 = new Employee("Ahmed");
+        Employee dev2 = new Employee("Sara");
+        Department engineering = new Department("Engineering");
+        engineering.Add(dev1);
+        engineering.Add(dev2);
+
+        Employee manager = new Employee("Mona");
+        Department company = new Department("Headquarters");
+        company.Add(engineering);
+        company.Add(manager);
+
+        Console.WriteLine("\n--- Company Structure ---");
+        company.ShowDetails();
     }
 }
