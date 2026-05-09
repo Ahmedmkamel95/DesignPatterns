@@ -1,6 +1,7 @@
-﻿using DesignPatterns.Structural.Decorator.Component;
+using DesignPatterns.Structural.Decorator.Component;
 using DesignPatterns.Structural.Decorator.Interface;
 using DesignPatterns.Structural.Adapter;
+using DesignPatterns.Structural.Bridge;
 
 class Program
 {
@@ -24,5 +25,14 @@ class Program
         TypeCCharger typeCCharger = new TypeCCharger();
         IPhoneCharger adapter = new ChargerAdapter(typeCCharger);
         adapter.ChargeWithIPhone();
+
+        /* 5️⃣ الاستخدام (The Bridge Pattern)
+         * Decouples an abstraction from its implementation so that the two can vary independently.
+         */
+        Vehicle petrolCar = new Car(new PetrolEngine());
+        petrolCar.Drive();
+
+        Vehicle electricCar = new Car(new ElectricEngine());
+        electricCar.Drive();
     }
 }
