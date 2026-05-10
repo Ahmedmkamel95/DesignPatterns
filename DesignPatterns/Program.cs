@@ -5,6 +5,7 @@ using DesignPatterns.Structural.Bridge;
 using DesignPatterns.Structural.Composite;
 using DesignPatterns.Structural.Facade;
 using DesignPatterns.Creational.Singleton;
+using DesignPatterns.Creational.AbstractFactory;
 
 class Program
 {
@@ -106,5 +107,28 @@ class Program
         factory = new DesignPatterns.Creational.FactoryMethod.BikeFactory();
         DesignPatterns.Creational.FactoryMethod.IVehicle factoryBike = factory.CreateVehicle();
         factoryBike.Drive();
+
+        /*
+         * The Abstract Factory Pattern
+         * Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+         */
+        Console.WriteLine("\n--- Abstract Factory Pattern ---");
+        IGUIFactory guiFactory;
+        string os = "Windows";
+
+        if (os == "Windows")
+        {
+            guiFactory = new WindowsFactory();
+        }
+        else
+        {
+            guiFactory = new MacFactory();
+        }
+
+        IButton button = guiFactory.CreateButton();
+        ICheckbox checkbox = guiFactory.CreateCheckbox();
+
+        button.Render();
+        checkbox.Check();
     }
 }
