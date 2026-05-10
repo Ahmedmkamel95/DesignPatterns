@@ -6,6 +6,7 @@ using DesignPatterns.Structural.Composite;
 using DesignPatterns.Structural.Facade;
 using DesignPatterns.Creational.Singleton;
 using DesignPatterns.Creational.AbstractFactory;
+using DesignPatterns.Behavioral.Strategy;
 
 class Program
 {
@@ -130,5 +131,19 @@ class Program
 
         button.Render();
         checkbox.Check();
+
+        /*
+         * The Strategy Pattern
+         * Defines a family of algorithms, encapsulates each one, and makes them interchangeable.
+         */
+        Console.WriteLine("\n--- Strategy Pattern ---");
+        var paymentContext = new PaymentContext(new CreditCardPayment());
+        paymentContext.Pay(100);
+
+        paymentContext.SetPaymentStrategy(new PayPalPayment());
+        paymentContext.Pay(200);
+
+        paymentContext.SetPaymentStrategy(new CashPayment());
+        paymentContext.Pay(50);
     }
 }
