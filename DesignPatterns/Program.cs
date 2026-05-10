@@ -4,6 +4,7 @@ using DesignPatterns.Structural.Adapter;
 using DesignPatterns.Structural.Bridge;
 using DesignPatterns.Structural.Composite;
 using DesignPatterns.Structural.Facade;
+using DesignPatterns.Creational.Singleton;
 
 class Program
 {
@@ -73,5 +74,37 @@ class Program
         homeTheater.WatchMovie();
         Console.WriteLine();
         homeTheater.EndMovie();
+
+        /*
+         * The Singleton Pattern
+         * Ensures a class has only one instance, and provides a global point of access to it.
+         */
+        Console.WriteLine("\n--- Singleton Pattern ---");
+        var config1 = Singleton.GetInstance();
+        var config2 = Singleton.GetInstance();
+
+        if (ReferenceEquals(config1, config2))
+        {
+            Console.WriteLine("Singleton works, both variables contain the same instance.");
+        }
+        else
+        {
+            Console.WriteLine("Singleton failed, variables contain different instances.");
+        }
+
+        /*
+         * The Factory Method Pattern
+         * Creates objects without exposing the exact creation logic to the client.
+         */
+        Console.WriteLine("\n--- Factory Method Pattern ---");
+        DesignPatterns.Creational.FactoryMethod.VehicleFactory factory;
+
+        factory = new DesignPatterns.Creational.FactoryMethod.CarFactory();
+        DesignPatterns.Creational.FactoryMethod.IVehicle factoryCar = factory.CreateVehicle();
+        factoryCar.Drive();
+
+        factory = new DesignPatterns.Creational.FactoryMethod.BikeFactory();
+        DesignPatterns.Creational.FactoryMethod.IVehicle factoryBike = factory.CreateVehicle();
+        factoryBike.Drive();
     }
 }
