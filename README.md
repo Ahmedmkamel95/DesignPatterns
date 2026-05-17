@@ -38,14 +38,14 @@ The project is structured under the `DesignPatterns` folder with subfolders for 
 ### Behavioral Patterns
 
 13. Chain of Responsibility
-14. Command
-15. Interpreter
+14. Command done
+15. Interpreter done
 16. Iterator
-17. Mediator
+17. Mediator done
 18. Memento
-19. Observer
+19. Observer done
 20. State
-21. Strategy
+21. Strategy done
 22. Template Method
 23. Visitor
 24. Null Object
