@@ -15,6 +15,13 @@ using DesignPatterns.Behavioral.Interpreter;
 using DesignPatterns.Behavioral.Mediator;
 using DesignPatterns.Behavioral.Observer;
 using DesignPatterns.Behavioral.Strategy;
+using DesignPatterns.Behavioral.ChainOfResponsibility;
+using DesignPatterns.Behavioral.Iterator;
+using DesignPatterns.Behavioral.Memento;
+using DesignPatterns.Behavioral.State;
+using DesignPatterns.Behavioral.TemplateMethod;
+using DesignPatterns.Behavioral.Visitor;
+using DesignPatterns.Behavioral.NullObject;
 
 class Program
 {
@@ -290,5 +297,139 @@ class Program
         IImage image = new ProxyImage("landscape.jpg");
         image.Display();
         image.Display();
+
+        /*
+         * The Chain of Responsibility Pattern
+         * Passes a request along a chain of handlers. Upon receiving a request, each handler decides either to process it or to pass it to the next handler in the chain.
+         */
+        Console.WriteLine("\n--- Chain of Responsibility Pattern ---");
+        
+        Approver managerApprover = new Manager();
+        Approver directorApprover = new Director();
+        Approver presidentApprover = new President();
+
+        managerApprover.SetSuccessor(directorApprover);
+        directorApprover.SetSuccessor(presidentApprover);
+
+        // Generate and process purchase requests
+        managerApprover.ProcessRequest(500);
+        managerApprover.ProcessRequest(4500);
+        managerApprover.ProcessRequest(15000);
+        managerApprover.ProcessRequest(25000);
+
+        /*
+         * The Iterator Pattern
+         * Provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+         */
+        Console.WriteLine("\n--- Iterator Pattern ---");
+        
+        ItemCollection collection = new ItemCollection();
+        collection.AddItem(new Item("Item 1"));
+        collection.AddItem(new Item("Item 2"));
+        collection.AddItem(new Item("Item 3"));
+        collection.AddItem(new Item("Item 4"));
+
+        IIterator iterator = collection.CreateIterator();
+
+        Console.WriteLine("Iterating over collection:");
+        for (Item item = iterator.First(); !iterator.IsDone(); item = iterator.Next())
+        {
+            if (item != null)
+            {
+                Console.WriteLine(item.Name);
+            }
+        }
+
+        /*
+         * The Memento Pattern
+         * Without violating encapsulation, captures and externalizes an object's internal state so that the object can be restored to this state later.
+         */
+        Console.WriteLine("\n--- Memento Pattern ---");
+        
+        var editor = new TextEditor();
+        var history = new History();
+
+        editor.Type("Hello, ");
+        history.Push(editor.Save());
+
+        editor.Type("world!");
+        history.Push(editor.Save());
+
+        editor.Type(" This is a mistake.");
+        
+        // Undo last change
+        var lastState = history.Pop();
+        if (lastState != null)
+        {
+            // Restore to "Hello, world!"
+            editor.Restore(lastState);
+            lastState = history.Pop();
+            if (lastState != null)
+            {
+                // Restore to "Hello, "
+                editor.Restore(lastState);
+            }
+        }
+
+        /*
+         * The State Pattern
+         * Allows an object to alter its behavior when its internal state changes. The object will appear to change its class.
+         */
+        Console.WriteLine("\n--- State Pattern ---");
+        
+        var mediaPlayer = new MediaPlayer();
+        
+        mediaPlayer.Play();   // Starting the player.
+        mediaPlayer.Pause();  // Pausing the player.
+        mediaPlayer.Pause();  // Already paused.
+        mediaPlayer.Play();   // Resuming the player.
+        mediaPlayer.Stop();   // Stopping the player.
+        mediaPlayer.Stop();   // Already stopped.
+
+        /*
+         * The Template Method Pattern
+         * Defines the skeleton of an algorithm in a method, deferring some steps to subclasses.
+         * Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
+         */
+        Console.WriteLine("\n--- Template Method Pattern ---");
+        
+        Console.WriteLine("CSV Processing:");
+        DataProcessor csvProcessor = new CsvDataProcessor();
+        csvProcessor.ProcessData();
+
+        Console.WriteLine("\nJSON Processing:");
+        DataProcessor jsonProcessor = new JsonDataProcessor();
+        jsonProcessor.ProcessData();
+
+        /*
+         * The Visitor Pattern
+         * Represents an operation to be performed on the elements of an object structure.
+         * Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+         */
+        Console.WriteLine("\n--- Visitor Pattern ---");
+        
+        var document = new DocumentStructure();
+        document.Add(new TextElement("Hello, this is a visitor pattern example."));
+        document.Add(new ImageElement("http://example.com/image.png"));
+        document.Add(new TextElement("Another text block."));
+
+        var exportVisitor = new ExportVisitor();
+        document.Accept(exportVisitor);
+
+        /*
+         * The Null Object Pattern
+         * Instead of using null references to indicate the absence of an object, use an object that implements the expected interface but whose method bodies are empty or do nothing.
+         */
+        Console.WriteLine("\n--- Null Object Pattern ---");
+        
+        // Using a real logger
+        Console.WriteLine("With ConsoleLogger:");
+        var taskWithLogger = new TaskProcessor(new ConsoleLogger());
+        taskWithLogger.Process("Data Cleanup");
+
+        // Using a null logger (no output will be generated, but no exceptions are thrown)
+        Console.WriteLine("\nWith NullLogger:");
+        var taskWithoutLogger = new TaskProcessor(new NullLogger());
+        taskWithoutLogger.Process("Background Sync");
     }
 }
